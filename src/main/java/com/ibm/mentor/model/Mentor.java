@@ -43,6 +43,8 @@ public class Mentor {
     private int startTime;
     
     private int endTime;
+    
+    private double rating;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(name = "mentor_skills", 
@@ -139,5 +141,13 @@ public class Mentor {
 
 	public void setFee(double fee) {
 		this.fee = fee;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}    
 }

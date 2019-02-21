@@ -45,6 +45,8 @@ public class Trainings {
 	private TrainingStatus status;
 	
 	private int progress;
+	
+	private double rating;
 
     public Trainings() {}
 
@@ -102,6 +104,14 @@ public class Trainings {
 
 	public void setStatus(TrainingStatus status) {
 		this.status = status;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 }

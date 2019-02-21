@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ibm.mentor.message.request.ProposeRequest;
 import com.ibm.mentor.message.request.SearchForm;
+import com.ibm.mentor.message.request.UpdateRatingRequest;
 import com.ibm.mentor.message.request.UpdateStatusRequest;
 import com.ibm.mentor.message.response.ResponseMessage;
 import com.ibm.mentor.model.Mentor;
@@ -103,5 +104,26 @@ public class TrainingController {
 		trainingRepository.save(training);
 
 		return new ResponseEntity<>(new ResponseMessage("Training Status Updated!"), HttpStatus.OK);
+	}
+	
+	@PostMapping("/updaterating")
+	public ResponseEntity<?> updateRating(@RequestBody UpdateRatingRequest updateRatingRequest) {
+
+		Trainings training = trainingRepository.getOne(updateRatingRequest.getId());
+		training.setRating(updateRatingRequest.getRating());
+		
+		trainingRepository.save(training);
+		
+		Mentor mentor = mentorRepository.getOne(updateRatingRequest.getMentorId());
+		
+		if(mentor.getRating() > 0 && mentor.getTrainingsDelivered() > 0) {
+			mentor.setRating((mentor.getRating() + updateRatingRequest.getRating()) / mentor.getTrainingsDelivered());
+		} else {
+			mentor.setRating(updateRatingRequest.getRating());
+		}
+		
+		mentorRepository.save(mentor);
+
+		return new ResponseEntity<>(new ResponseMessage("Training Rating Updated!"), HttpStatus.OK);
 	}
 }
