@@ -7,3 +7,4 @@ Angular (material)
 Spring Data JPA
 Spring MVC Rest
 Microservices
+JWT
